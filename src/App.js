@@ -49,6 +49,14 @@ const Button = styled.button`
   background: ${props => props.primary ? 'magenta' : 'white'}
 `
 
+const Link = ({ className, children }) => (
+  <a href="#" className={className}>{children}</a>
+)
+
+const StyledLink = styled(Link) `
+font-size: 40px;
+`
+
 class App extends Component {
   render() {
     return (
@@ -64,6 +72,9 @@ class App extends Component {
         </Intro>
         <Button primary>Proceed to Payment</Button>
         <Button>Cancel</Button>
+        <Link>Normal Link</Link>
+        <StyledLink>Colorful Link</StyledLink>
+
       </AppWrapper>
     );
   }
