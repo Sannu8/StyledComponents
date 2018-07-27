@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 
 
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, ThemeProvider } from 'styled-components';
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -40,8 +40,8 @@ const Intro = styled.p`
 `
 
 const Input = styled.input`
-  color: red;
-  background: cyan;
+  color: ${props => props.theme.color};
+  background: ${props => props.theme.background};
 `
 
 const Password = styled.input.attrs({
@@ -62,9 +62,16 @@ const Button = styled.button`
   background: ${props => props.primary ? 'magenta' : 'white'}
   border-radius: 5%;
   height: 50px;
-  font-size: 30px;
-  margin: 10px;
+  font-size: ${props => props.theme.font};
+  margin: ${props => props.theme.margin}
 `
+
+Button.defaultProps = {
+  theme: {
+    font: '30px',
+    margin: '20px'
+  }
+}
 
 const Link = ({ className, children }) => (
   <a href="#" className={className}>{children}</a>
@@ -83,6 +90,18 @@ const GreenLink = DifferentLink.extend`
   color: green;
 `
 
+const theme = {
+  font: '10px',
+  margin: '5px',
+  color: 'red',
+  background: 'lightgrey'
+}
+
+const invertTheme = ({ color, background }) => ({
+  color: background,
+  background: color
+})
+
 class App extends Component {
   render() {
     return (
@@ -94,14 +113,26 @@ class App extends Component {
         <Intro>
           Bootstrapped with <code>create-react-app</code>.
           <br />
-          <Input placeholder="FirstName" />
-          <Input value="LastName" />
-          <Password size="5em" />
-          <Password />
+          <Input placeholder="FirstName" /><br />
+          <Input value="Theme Added" theme={{ color: 'brown', background: 'coral' }} />
+          <ThemeProvider theme={theme}>
+            <div>
+              <Input value="Theme Provider" /><br />
+              <ThemeProvider theme={invertTheme}>
+                <Input value="Inverted Theme" />
+              </ThemeProvider>
+              <Input value="ThemeProvider Override" theme={{ color: 'blue', background: 'yellow' }} />
+            </div>
+          </ThemeProvider>
+          <Password size="5em" /><br />
+          <Password /><br />
         </Intro >
         <Button primary>Proceed to Payment</Button>
-        <Button>Cancel</Button>
+        <ThemeProvider theme={theme}>
+          <Button>Cancel</Button>
+        </ThemeProvider>
         <RedButton>Discard</RedButton>
+
         <br />
         <Link>Normal Link</Link>
         <StyledLink>Colorful Link</StyledLink>
