@@ -44,9 +44,26 @@ const Input = styled.input`
   background: cyan;
 `
 
+const Password = styled.input.attrs({
+  type: 'password',
+  margin: props => props.size || '1em',
+  padding: props => props.size || '2em'
+}) `
+  color: red;
+  background: cyan;
+  margin: ${props => props.margin};
+  padding: ${props => props.padding};
+`
+
+
+
 const Button = styled.button`
   color: ${props => props.primary ? 'white' : 'magenta'}
   background: ${props => props.primary ? 'magenta' : 'white'}
+  border-radius: 5%;
+  height: 50px;
+  font-size: 30px;
+  margin: 10px;
 `
 
 const Link = ({ className, children }) => (
@@ -55,6 +72,15 @@ const Link = ({ className, children }) => (
 
 const StyledLink = styled(Link) `
 font-size: 40px;
+`
+const RedButton = Button.extend`
+  background: red;
+  color: white;
+`
+
+const DifferentLink = Button.withComponent('a');
+const GreenLink = DifferentLink.extend`
+  color: green;
 `
 
 class App extends Component {
@@ -67,15 +93,22 @@ class App extends Component {
         </Header>
         <Intro>
           Bootstrapped with <code>create-react-app</code>.
-          <Input placeholder="FirstName"></Input>
-          <Input value="LastName"></Input>
-        </Intro>
+          <br />
+          <Input placeholder="FirstName" />
+          <Input value="LastName" />
+          <Password size="5em" />
+          <Password />
+        </Intro >
         <Button primary>Proceed to Payment</Button>
         <Button>Cancel</Button>
+        <RedButton>Discard</RedButton>
+        <br />
         <Link>Normal Link</Link>
         <StyledLink>Colorful Link</StyledLink>
+        <br />
+        <GreenLink>I am green and a link.</GreenLink>
 
-      </AppWrapper>
+      </AppWrapper >
     );
   }
 }
