@@ -113,7 +113,7 @@ class App extends Component {
         <Intro>
           Bootstrapped with <code>create-react-app</code>.
           <br />
-          <Input placeholder="FirstName" /><br />
+          <Input placeholder="FirstName" innerRef={x => { this.input = x }} onMouseOver={() => this.input.focus()} /><br />
           <Input value="Theme Added" theme={{ color: 'brown', background: 'coral' }} />
           <ThemeProvider theme={theme}>
             <div>
